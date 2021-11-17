@@ -12,9 +12,17 @@
 ## Changelog
 ### client folder
 #### index.js
+[x] Added function to display search suggestions
 [x] Made changes to event listeners for search results
+
 #### index.html
+[x] Added search bar
+[x] Added buttons
+[x] Added text logo
 [x] Added results section
+
+#### style.css
+[x] Styling of home page
 
 ### server folder
 #### index.js
@@ -37,4 +45,10 @@
 ## Wins & Challenges
 ### Wins
 - Created and tested API server
+- Further jest testing
+- Succesfully formatted home pages
+- Synchronised changes without issues
+- Successful search results
 ### Challenges
+- It took longer than expected to do the client fetch request
+- It took longer than expected to do formatting of search results
