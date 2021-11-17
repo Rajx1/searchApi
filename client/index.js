@@ -2,17 +2,18 @@
 const form = document.querySelector('form')
 
 form.addEventListener('submit', e => {
-    let searchterm = form.myInput;
-}
-);
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target).entries());
+  getResults(formData.search);
+});
 
 /*Test Appending of Results*/
-function printResults(){
-    console.log("Display");
+function printResults(res){
+  console.log(r.json());
 }
 
-function getResults(){
-    fetch('http://localhost:3000/')
+function getResults(term){
+    fetch(`http://localhost:3000/search/${term}`)
         .then(r => r.json())
         .then(printResults())
         .catch(console.warn)
