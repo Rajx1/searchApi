@@ -10,6 +10,12 @@
 - Run `npm start` to launch server or `npm run dev` if using nodemon
 
 ## Changelog
+### client folder
+#### index.js
+[x] Made changes to event listeners for search results
+#### index.html
+[x] Added results section
+
 ### server folder
 #### index.js
 [x] Newly created script to start server app

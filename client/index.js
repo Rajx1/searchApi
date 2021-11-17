@@ -1,23 +1,86 @@
 /*Add addEventListener*/
 const form = document.querySelector('form')
+const luckyDip = document.querySelector('#luckydip-button')
+const resultsTitle = document.querySelector('#result-title')
+const resultsSection = document.querySelector('#results')
+let lastSearch, lastResults
 
 form.addEventListener('submit', e => {
   e.preventDefault();
   const formData = Object.fromEntries(new FormData(e.target).entries());
-  getResults(formData.search);
-});
+  if(formData.search && lastSearch != formData.search) {
+    lastSearch = formData.search
+    getResults(formData.search)
+  }
+})
+
+luckyDip.addEventListener('click', e => {
+  if(lastResults)
+    window.location.href = lastResults[Math.floor(Math.random() * lastResults.length)]
+})
 
 /*Test Appending of Results*/
+/*
 function printResults(res){
   console.log(r.json());
+}*/
+
+function populateLinks(results) {
+  let links = document.querySelectorAll('.links')
+  if(links.length === 0) {
+    links = []
+    for(let i = 0; i <  results.length; i++) {
+      const link = document.createElement('a')
+      links.push(link)
+      resultsSection.appendChild(link)
+    }
+  }
+
+  for(let i = 0; i < links.length; i++) {
+    const anchor = links[i]
+    anchor.textContent = results[i]
+    anchor.setAttribute('class', 'links')
+    anchor.setAttribute('href', results[i])
+  }
+  lastResults = results
 }
 
+function displayResults(results) {
+  let title
+  if(results) {
+    if(typeof results === 'string')
+      title = results
+    else {
+      title = `Look at what we found!`
+      populateLinks(results)
+    }
+  } else {
+    title = `Sorry could not find anything`
+    lastSearch = ''
+    lastResults = ''
+    resultsSection.innerHTML = ''
+  }
+
+  resultsTitle.textContent = title;
+}
+
+async function getResults(term){
+  try {
+      let response = await fetch(`http://localhost:3000/search/${term}`)
+      response = await response.json();
+      displayResults(response.results)
+  } catch (err) {
+      displayResults(err.message)
+  }
+}
+
+/*
 function getResults(term){
     fetch(`http://localhost:3000/search/${term}`)
         .then(r => r.json())
-        .then(printResults())
+        .then(printResults(r))
         .catch(console.warn)
-}
+}*/
 
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
